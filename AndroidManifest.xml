@@ -16,28 +16,25 @@
 -->
 
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.android.inputmethod.leanback" >
+     package="com.android.inputmethod.leanback">
 
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
-    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+    <uses-permission android:name="android.permission.RECORD_AUDIO"/>
 
-    <uses-sdk
-        android:minSdkVersion="16"
-        android:targetSdkVersion="23" />
+    <uses-sdk android:minSdkVersion="16"
+         android:targetSdkVersion="23"/>
 
-    <application
-        android:label="@string/ime_name" >
-        <service
-            android:name="com.android.inputmethod.leanback.service.LeanbackImeService"
-            android:label="@string/ime_service_name"
-            android:permission="android.permission.BIND_INPUT_METHOD" >
+    <application android:label="@string/ime_name">
+        <service android:name="com.android.inputmethod.leanback.service.LeanbackImeService"
+             android:label="@string/ime_service_name"
+             android:permission="android.permission.BIND_INPUT_METHOD"
+             android:exported="true">
             <intent-filter>
-                <action android:name="android.view.InputMethod" />
+                <action android:name="android.view.InputMethod"/>
             </intent-filter>
 
-            <meta-data
-                android:name="android.view.im"
-                android:resource="@xml/method" />
+            <meta-data android:name="android.view.im"
+                 android:resource="@xml/method"/>
         </service>
     </application>
 
