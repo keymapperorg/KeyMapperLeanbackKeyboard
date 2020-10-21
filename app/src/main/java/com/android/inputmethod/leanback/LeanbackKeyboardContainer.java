@@ -453,7 +453,7 @@ public class LeanbackKeyboardContainer {
     private RecognizerView mVoiceButtonView;
 
     private class ScaleAnimation extends Animation {
-        private final ViewGroup.LayoutParams mParams;
+        private final LayoutParams mParams;
         private final View mView;
         private float mStartX;
         private float mStartY;
@@ -587,7 +587,7 @@ public class LeanbackKeyboardContainer {
         mClickAnimDur = context.getResources().getInteger(R.integer.clicked_anim_duration);
         mSelectorAnimator = ValueAnimator.ofFloat(1.0f, scale);
         mSelectorAnimator.setDuration(mClickAnimDur);
-        mSelectorAnimator.addUpdateListener(new ValueAnimator.AnimatorUpdateListener() {
+        mSelectorAnimator.addUpdateListener(new AnimatorUpdateListener() {
             @Override
             public void onAnimationUpdate(ValueAnimator animation) {
                 float scale = (Float) animation.getAnimatedValue();
@@ -1109,7 +1109,7 @@ public class LeanbackKeyboardContainer {
         }
     }
 
-    public Keyboard.Key getKey(int type, int index) {
+    public Key getKey(int type, int index) {
         return (type == KeyFocus.TYPE_MAIN) ? mMainKeyboardView.getKey(index) : null;
     }
 

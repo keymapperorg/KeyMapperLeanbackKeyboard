@@ -235,7 +235,7 @@ public class RecognizerView extends RelativeLayout {
         void onCancelRecordingClicked();
     }
 
-    public static class SavedState extends View.BaseSavedState {
+    public static class SavedState extends BaseSavedState {
         State mState;
 
         public SavedState(Parcelable superState) {
@@ -249,8 +249,8 @@ public class RecognizerView extends RelativeLayout {
         }
 
         @SuppressWarnings("hiding")
-        public static final Parcelable.Creator<SavedState> CREATOR
-        = new Parcelable.Creator<SavedState>() {
+        public static final Creator<SavedState> CREATOR
+        = new Creator<SavedState>() {
 
             @Override
             public SavedState createFromParcel(Parcel in) {

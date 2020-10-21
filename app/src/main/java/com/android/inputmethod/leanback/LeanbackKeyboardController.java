@@ -138,10 +138,10 @@ public class LeanbackKeyboardController implements LeanbackKeyboardContainer.Voi
     private InputListener mInputListener;
     private LeanbackKeyboardContainer mContainer;
 
-    private LeanbackKeyboardContainer.KeyFocus mDownFocus =
-            new LeanbackKeyboardContainer.KeyFocus();
-    private LeanbackKeyboardContainer.KeyFocus mTempFocus =
-            new LeanbackKeyboardContainer.KeyFocus();
+    private KeyFocus mDownFocus =
+            new KeyFocus();
+    private KeyFocus mTempFocus =
+            new KeyFocus();
 
     ArrayList<KeyChange> mKeyChangeHistory = new ArrayList<KeyChange>(KEY_CHANGE_HISTORY_SIZE + 1);
     private PointF mTempPoint = new PointF();
@@ -208,7 +208,7 @@ public class LeanbackKeyboardController implements LeanbackKeyboardContainer.Voi
 
     private PointF getCurrentKeyPosition() {
         if (mContainer != null) {
-            LeanbackKeyboardContainer.KeyFocus initialKeyInfo = mContainer.getCurrFocus();
+            KeyFocus initialKeyInfo = mContainer.getCurrFocus();
             return new PointF(initialKeyInfo.rect.centerX(), initialKeyInfo.rect.centerY());
         }
         return null;
@@ -331,7 +331,7 @@ public class LeanbackKeyboardController implements LeanbackKeyboardContainer.Voi
         commitKey(mContainer.getCurrFocus());
     }
 
-    private void commitKey(LeanbackKeyboardContainer.KeyFocus keyFocus) {
+    private void commitKey(KeyFocus keyFocus) {
         if (mContainer == null || keyFocus == null) {
             return;
         }
