@@ -18,9 +18,9 @@
 <resources xmlns:xliff="urn:oasis:names:tc:xliff:document:1.2">
 
     <!-- Name of this ime [CHAR LIMIT=20] -->
-    <string name="ime_name"><xliff:g id="app_name">Leanback</xliff:g> Keyboard</string>
+    <string name="ime_name"><xliff:g id="app_name">Key Mapper Leanback</xliff:g> Keyboard</string>
     <!-- Name of this ime's input service [CHAR LIMIT=20] -->
-    <string name="ime_service_name"><xliff:g id="app_name">Leanback</xliff:g> Keyboard</string>
+    <string name="ime_service_name"><xliff:g id="app_name">Key Mapper Leanback</xliff:g> Keyboard</string>
 
     <!-- Symbols that are commonly considered word separators in this language [DO NOT TRANSLATE] -->
     <string name="word_separators">\u0020.,;:!?\n()[]*&amp;@{}/&lt;&gt;_+=|&quot;</string>

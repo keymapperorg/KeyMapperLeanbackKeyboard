@@ -9,7 +9,7 @@
     android:keepScreenOn="true"
     android:orientation="vertical" >
 
-    <com.android.inputmethod.leanback.voice.BitmapSoundLevelView
+    <io.github.sds100.keymapper.inputmethod.leanback.voice.BitmapSoundLevelView
         android:id="@+id/microphone"
         android:layout_width="match_parent"
         android:layout_height="match_parent"

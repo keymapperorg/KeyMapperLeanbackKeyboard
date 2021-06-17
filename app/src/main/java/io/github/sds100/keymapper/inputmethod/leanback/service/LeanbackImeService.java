@@ -14,13 +14,16 @@
  * limitations under the License
  */
 
-package com.android.inputmethod.leanback.service;
+package io.github.sds100.keymapper.inputmethod.leanback.service;
 
+import android.content.BroadcastReceiver;
+import android.content.Context;
 import android.content.Intent;
+import android.content.IntentFilter;
 import android.inputmethodservice.InputMethodService;
 import android.os.Handler;
-import android.os.Looper;
 import android.os.Message;
+import android.util.Log;
 import android.view.InputDevice;
 import android.view.KeyEvent;
 import android.view.MotionEvent;
@@ -28,14 +31,11 @@ import android.view.View;
 import android.view.inputmethod.CompletionInfo;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputConnection;
-import android.util.Log;
 
-import com.android.inputmethod.leanback.LeanbackKeyboardContainer;
-import com.android.inputmethod.leanback.LeanbackKeyboardController;
-import com.android.inputmethod.leanback.LeanbackKeyboardView;
-import com.android.inputmethod.leanback.LeanbackLocales;
-import com.android.inputmethod.leanback.LeanbackSuggestionsFactory;
-import com.android.inputmethod.leanback.LeanbackUtils;
+import io.github.sds100.keymapper.inputmethod.leanback.LeanbackKeyboardController;
+import io.github.sds100.keymapper.inputmethod.leanback.LeanbackKeyboardView;
+import io.github.sds100.keymapper.inputmethod.leanback.LeanbackSuggestionsFactory;
+import io.github.sds100.keymapper.inputmethod.leanback.LeanbackUtils;
 
 /**
  * This is a simplified version of GridIme
@@ -55,8 +55,96 @@ public class LeanbackImeService extends InputMethodService {
     private static final int MSG_SUGGESTIONS_CLEAR = 123;
     private static final int SUGGESTIONS_CLEAR_DELAY = 1000;
 
-    public static final String IME_OPEN = "com.android.inputmethod.leanback.action.IME_OPEN";
-    public static final String IME_CLOSE = "com.android.inputmethod.leanback.action.IME_CLOSE";
+    public static final String IME_OPEN = "io.github.sds100.keymapper.inputmethod.leanback.action.IME_OPEN";
+    public static final String IME_CLOSE = "io.github.sds100.keymapper.inputmethod.leanback.action.IME_CLOSE";
+
+    //DON'T CHANGE THESE!!!
+    private static final String KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_DOWN_UP = "io.github.sds100.keymapper.inputmethod.ACTION_INPUT_DOWN_UP";
+    private static final String KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_DOWN = "io.github.sds100.keymapper.inputmethod.ACTION_INPUT_DOWN";
+    private static final String KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_UP = "io.github.sds100.keymapper.inputmethod.ACTION_INPUT_UP";
+    private static final String KEY_MAPPER_INPUT_METHOD_ACTION_TEXT = "io.github.sds100.keymapper.inputmethod.ACTION_INPUT_TEXT";
+
+    private static final String KEY_MAPPER_INPUT_METHOD_EXTRA_TEXT = "io.github.sds100.keymapper.inputmethod.EXTRA_TEXT";
+    private static final String KEY_MAPPER_INPUT_METHOD_EXTRA_KEY_EVENT = "io.github.sds100.keymapper.inputmethod.EXTRA_KEY_EVENT";
+
+    final static class KeyMapperBroadcastReceiver extends BroadcastReceiver {
+        private final LeanbackImeService mIms;
+
+        public KeyMapperBroadcastReceiver(LeanbackImeService ims) {
+            mIms = ims;
+        }
+
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            final String action = intent.getAction();
+
+            assert action != null;
+
+            switch (action) {
+                case KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_DOWN_UP: {
+                    KeyEvent downEvent = intent.getParcelableExtra(KEY_MAPPER_INPUT_METHOD_EXTRA_KEY_EVENT);
+
+                    InputConnection ic = mIms.getCurrentInputConnection();
+
+                    if (ic != null) {
+                        ic.sendKeyEvent(downEvent);
+                    }
+
+                    KeyEvent upEvent = KeyEvent.changeAction(downEvent, KeyEvent.ACTION_UP);
+
+                    if (ic != null) {
+                        ic.sendKeyEvent(upEvent);
+                    }
+
+                    break;
+                }
+
+                case KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_DOWN: {
+                    KeyEvent downEvent = intent.getParcelableExtra(KEY_MAPPER_INPUT_METHOD_EXTRA_KEY_EVENT);
+
+                    downEvent = KeyEvent.changeAction(downEvent, KeyEvent.ACTION_DOWN);
+
+                    InputConnection ic = mIms.getCurrentInputConnection();
+
+                    if (ic != null) {
+                        ic.sendKeyEvent(downEvent);
+                    }
+
+                    break;
+                }
+
+                case KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_UP: {
+                    KeyEvent upEvent = intent.getParcelableExtra(KEY_MAPPER_INPUT_METHOD_EXTRA_KEY_EVENT);
+
+                    upEvent = KeyEvent.changeAction(upEvent, KeyEvent.ACTION_UP);
+
+                    InputConnection ic = mIms.getCurrentInputConnection();
+
+                    if (ic != null) {
+                        ic.sendKeyEvent(upEvent);
+                    }
+
+                    break;
+                }
+
+                case KEY_MAPPER_INPUT_METHOD_ACTION_TEXT: {
+                    String text = intent.getStringExtra(KEY_MAPPER_INPUT_METHOD_EXTRA_TEXT);
+
+                    if (text == null) return;
+
+                    InputConnection ic = mIms.getCurrentInputConnection();
+
+                    if (ic != null) {
+                        ic.commitText(text, 1);
+                    }
+
+                    break;
+                }
+            }
+        }
+    }
+
+    final KeyMapperBroadcastReceiver mKeyMapperBroadcastReceiver = new KeyMapperBroadcastReceiver(this);
 
     private LeanbackKeyboardController.InputListener mInputListener
             = new LeanbackKeyboardController.InputListener() {
@@ -101,6 +189,26 @@ public class LeanbackImeService extends InputMethodService {
             mShouldClearSuggestions = true;
             mHandler.sendEmptyMessageDelayed(MSG_SUGGESTIONS_CLEAR, SUGGESTIONS_CLEAR_DELAY);
         }
+    }
+
+    @Override
+    public void onCreate() {
+        super.onCreate();
+
+        final IntentFilter keyMapperIntentFilter = new IntentFilter();
+        keyMapperIntentFilter.addAction(KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_DOWN_UP);
+        keyMapperIntentFilter.addAction(KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_DOWN);
+        keyMapperIntentFilter.addAction(KEY_MAPPER_INPUT_METHOD_ACTION_INPUT_UP);
+        keyMapperIntentFilter.addAction(KEY_MAPPER_INPUT_METHOD_ACTION_TEXT);
+
+        registerReceiver(mKeyMapperBroadcastReceiver, keyMapperIntentFilter);
+    }
+
+    @Override
+    public void onDestroy() {
+        unregisterReceiver(mKeyMapperBroadcastReceiver);
+
+        super.onDestroy();
     }
 
     @Override
@@ -254,7 +362,7 @@ public class LeanbackImeService extends InputMethodService {
         return textLeft != null ? textLeft.length() : 0;
     }
 
-    private int getCharLengthAfterCursor(InputConnection ic ) {
+    private int getCharLengthAfterCursor(InputConnection ic) {
         final CharSequence textRight = ic.getTextAfterCursor(1000, 0);
         return textRight != null ? textRight.length() : 0;
     }

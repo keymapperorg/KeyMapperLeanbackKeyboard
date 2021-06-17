@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.android.inputmethod.leanback;
+package io.github.sds100.keymapper.inputmethod.leanback;
 
 import android.content.Context;
 

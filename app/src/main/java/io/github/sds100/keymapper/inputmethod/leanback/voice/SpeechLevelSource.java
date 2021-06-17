@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.android.inputmethod.leanback.voice;
+package io.github.sds100.keymapper.inputmethod.leanback.voice;
 
 /**
  * Keeps track of the speech level as last observed by the recognition

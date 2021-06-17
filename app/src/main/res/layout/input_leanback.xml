@@ -16,7 +16,7 @@
 -->
 
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:leanbackime="http://schemas.android.com/apk/res/com.android.inputmethod.leanback"
+    xmlns:leanbackime="http://schemas.android.com/apk/res/io.github.sds100.keymapper.inputmethod.leanback"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:clipChildren="false"
@@ -31,7 +31,7 @@
         android:clipChildren="false"
         android:orientation="horizontal" >
 
-        <com.android.inputmethod.leanback.LeanbackKeyboardView
+        <io.github.sds100.keymapper.inputmethod.leanback.LeanbackKeyboardView
             android:id="@+id/main_keyboard"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -47,7 +47,7 @@
         android:layout_alignTop="@id/keyboard"
         android:layout_centerHorizontal="true" >
 
-        <com.android.inputmethod.leanback.voice.RecognizerView
+        <io.github.sds100.keymapper.inputmethod.leanback.voice.RecognizerView
             android:id="@+id/voice"
             android:layout_width="@dimen/recognizer_size"
             android:layout_height="@dimen/recognizer_size"

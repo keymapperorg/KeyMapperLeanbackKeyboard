@@ -14,17 +14,17 @@
  * limitations under the License
  */
 
-package com.android.inputmethod.leanback;
+package io.github.sds100.keymapper.inputmethod.leanback;
 
 import android.animation.Animator;
 import android.animation.ValueAnimator;
 import android.speech.RecognitionListener;
 import android.os.Bundle;
 
-import com.android.inputmethod.leanback.LeanbackKeyboardController.InputListener;
-import com.android.inputmethod.leanback.voice.RecognizerView;
-import com.android.inputmethod.leanback.voice.SpeechLevelSource;
-import com.android.inputmethod.leanback.service.LeanbackImeService;
+import io.github.sds100.keymapper.inputmethod.leanback.LeanbackKeyboardController.InputListener;
+import io.github.sds100.keymapper.inputmethod.leanback.voice.RecognizerView;
+import io.github.sds100.keymapper.inputmethod.leanback.voice.SpeechLevelSource;
+import io.github.sds100.keymapper.inputmethod.leanback.service.LeanbackImeService;
 
 import android.content.Context;
 import android.content.Intent;

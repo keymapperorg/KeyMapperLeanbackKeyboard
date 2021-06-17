@@ -14,10 +14,10 @@
  * limitations under the License
  */
 
-package com.android.inputmethod.leanback.voice;
+package io.github.sds100.keymapper.inputmethod.leanback.voice;
 
-import com.android.inputmethod.leanback.LeanbackUtils;
-import com.android.inputmethod.leanback.R;
+import io.github.sds100.keymapper.inputmethod.leanback.LeanbackUtils;
+import io.github.sds100.keymapper.inputmethod.leanback.R;
 
 import android.content.Context;
 import android.os.Parcel;

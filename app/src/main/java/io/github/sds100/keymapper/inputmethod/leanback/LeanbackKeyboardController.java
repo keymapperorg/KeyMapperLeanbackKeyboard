@@ -14,7 +14,7 @@
  * limitations under the License
  */
 
-package com.android.inputmethod.leanback;
+package io.github.sds100.keymapper.inputmethod.leanback;
 
 import android.graphics.PointF;
 import android.inputmethodservice.InputMethodService;
@@ -26,7 +26,7 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
 
-import com.android.inputmethod.leanback.LeanbackKeyboardContainer.KeyFocus;
+import io.github.sds100.keymapper.inputmethod.leanback.LeanbackKeyboardContainer.KeyFocus;
 
 import java.util.ArrayList;
 /**
